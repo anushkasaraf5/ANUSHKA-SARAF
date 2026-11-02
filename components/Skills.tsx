@@ -1,184 +1,239 @@
 import React, { useState } from 'react';
 import { SKILL_CATEGORIES } from '../constants';
 import { 
-  Sparkles, PenTool, Layout, HeartHandshake, ArrowUpRight
+  PenTool, Layout, Globe, Code, Image as ImageIcon, Palette, 
+  MessageSquare, Sparkles, Bot, Cpu, Wand2, Layers, Heart, 
+  Flame, Volume2, BookOpen, Brain, TrendingUp, Clock, Award, 
+  Users, Sliders, Type as TypeIcon, Smartphone, Grid, Zap, 
+  Compass, Search, UserCheck, Share2, Play, FileCode
 } from 'lucide-react';
 
 const Skills: React.FC = () => {
-  const [hoveredCategory, setHoveredCategory] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>('All');
 
-  // Category visual metadata for editorial styling
-  const categoryMeta = [
+  // Categories with custom marquee direction, speed, and accent styling
+  const marqueeCategories = [
     {
-      num: '01',
-      title: 'Technical & UX',
-      subtitle: 'Research, Architecture & UI',
-      icon: <Layout size={20} />,
-      accentColor: 'text-coral',
-      borderColor: 'border-coral',
-      bgHover: 'group-hover:bg-coral/5',
-      dotColor: 'bg-coral'
+      id: 'software',
+      title: 'Software & Production Tools',
+      badge: 'Software Stack',
+      direction: 'animate-marquee-left',
+      speedStyle: { animationDuration: '32s' },
+      accent: 'text-lavender',
+      dotColor: 'bg-lavender',
+      skills: SKILL_CATEGORIES.find(c => c.title === 'Software')?.skills || []
     },
     {
-      num: '02',
-      title: 'Soft Competencies',
-      subtitle: 'Leadership & Collaboration',
-      icon: <HeartHandshake size={20} />,
-      accentColor: 'text-amber-500',
-      borderColor: 'border-amber-500',
-      bgHover: 'group-hover:bg-amber-500/5',
-      dotColor: 'bg-amber-500'
-    },
-    {
-      num: '03',
-      title: 'Software Stack',
-      subtitle: 'Design & Prototyping Tools',
-      icon: <PenTool size={20} />,
-      accentColor: 'text-lavender',
-      borderColor: 'border-lavender',
-      bgHover: 'group-hover:bg-lavender/5',
-      dotColor: 'bg-lavender'
-    },
-    {
-      num: '04',
+      id: 'ai',
       title: 'AI & Generative Tools',
-      subtitle: 'Assistive Creative Workflows',
-      icon: <Sparkles size={20} />,
-      accentColor: 'text-sky-400',
-      borderColor: 'border-sky-400',
-      bgHover: 'group-hover:bg-sky-400/5',
-      dotColor: 'bg-sky-400'
+      badge: 'Generative AI',
+      direction: 'animate-marquee-right',
+      speedStyle: { animationDuration: '38s' },
+      accent: 'text-sky-400',
+      dotColor: 'bg-sky-400',
+      skills: SKILL_CATEGORIES.find(c => c.title.includes('AI'))?.skills || []
+    },
+    {
+      id: 'technical',
+      title: 'Technical & UI/UX Design',
+      badge: 'Product & UX',
+      direction: 'animate-marquee-left',
+      speedStyle: { animationDuration: '48s' },
+      accent: 'text-coral',
+      dotColor: 'bg-coral',
+      skills: SKILL_CATEGORIES.find(c => c.title === 'Technical')?.skills || []
+    },
+    {
+      id: 'soft',
+      title: 'Soft Competencies & Leadership',
+      badge: 'Strategy & Leadership',
+      direction: 'animate-marquee-right',
+      speedStyle: { animationDuration: '30s' },
+      accent: 'text-amber-500',
+      dotColor: 'bg-amber-500',
+      skills: SKILL_CATEGORIES.find(c => c.title.includes('Soft'))?.skills || []
     }
   ];
 
-  return (
-    <section id="skills" className="py-28 md:py-36 bg-white dark:bg-stone-900 transition-colors duration-300 relative overflow-hidden">
-      
-      {/* Background Soft Gradients */}
-      <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-coral/5 dark:bg-coral/[0.03] rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-lavender/10 dark:bg-lavender/[0.04] rounded-full blur-[120px] pointer-events-none"></div>
+  // Specific icon for every skill
+  const getSkillIcon = (name: string) => {
+    const lower = name.toLowerCase();
 
-      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
+    // Software
+    if (lower.includes('figma')) return <PenTool size={16} />;
+    if (lower.includes('framer')) return <Layout size={16} />;
+    if (lower.includes('wordpress')) return <Globe size={16} />;
+    if (lower.includes('html') || lower.includes('css')) return <Code size={16} />;
+    if (lower.includes('photoshop')) return <ImageIcon size={16} />;
+    if (lower.includes('illustrator')) return <Palette size={16} />;
+
+    // AI & Gen Tools
+    if (lower.includes('chatgpt')) return <MessageSquare size={16} />;
+    if (lower.includes('gemini')) return <Sparkles size={16} />;
+    if (lower.includes('claude')) return <Bot size={16} />;
+    if (lower.includes('ai studio') || lower.includes('google ai')) return <Cpu size={16} />;
+    if (lower.includes('canva')) return <Palette size={16} />;
+    if (lower.includes('make')) return <Wand2 size={16} />;
+    if (lower.includes('stitch')) return <Layers size={16} />;
+    if (lower.includes('lovable')) return <Heart size={16} />;
+    if (lower.includes('leonardo')) return <ImageIcon size={16} />;
+    if (lower.includes('firefly')) return <Flame size={16} />;
+    if (lower.includes('eleven')) return <Volume2 size={16} />;
+    if (lower.includes('notebook')) return <BookOpen size={16} />;
+
+    // Soft competencies
+    if (lower.includes('critical')) return <Brain size={16} />;
+    if (lower.includes('analytical')) return <TrendingUp size={16} />;
+    if (lower.includes('time')) return <Clock size={16} />;
+    if (lower.includes('leadership')) return <Award size={16} />;
+    if (lower.includes('team') || lower.includes('coordination')) return <Users size={16} />;
+
+    // Technical
+    if (lower.includes('saas') || lower.includes('dashboard')) return <Layout size={16} />;
+    if (lower.includes('user centric')) return <Heart size={16} />;
+    if (lower.includes('user interface') || lower.includes('(ui)')) return <Sliders size={16} />;
+    if (lower.includes('hierarchy') || lower.includes('layout')) return <Layers size={16} />;
+    if (lower.includes('typography') || lower.includes('colour')) return <TypeIcon size={16} />;
+    if (lower.includes('responsive')) return <Smartphone size={16} />;
+    if (lower.includes('grid') || lower.includes('spacing')) return <Grid size={16} />;
+    if (lower.includes('interaction')) return <Zap size={16} />;
+    if (lower.includes('journey')) return <Compass size={16} />;
+    if (lower.includes('architecture') || lower.includes('flows')) return <TrendingUp size={16} />;
+    if (lower.includes('wireframing')) return <FileCode size={16} />;
+    if (lower.includes('prototyping') && lower.includes('interactive')) return <Play size={16} />;
+    if (lower.includes('prototyping')) return <Layers size={16} />;
+    if (lower.includes('design systems')) return <Sliders size={16} />;
+    if (lower.includes('competitor')) return <Search size={16} />;
+    if (lower.includes('persona')) return <UserCheck size={16} />;
+    if (lower.includes('affinity')) return <Share2 size={16} />;
+
+    return <Zap size={16} />;
+  };
+
+  // Helper to multiply items for infinite continuous loop
+  const getInfiniteLoopItems = (items: typeof SKILL_CATEGORIES[0]['skills']) => {
+    // Duplicate sufficiently so the width exceeds screens and -50% loop is seamless
+    if (items.length < 8) {
+      return [...items, ...items, ...items, ...items];
+    }
+    return [...items, ...items];
+  };
+
+  const filteredCategories = activeFilter === 'All'
+    ? marqueeCategories
+    : marqueeCategories.filter(cat => cat.title.toLowerCase().includes(activeFilter.toLowerCase()) || cat.badge.toLowerCase().includes(activeFilter.toLowerCase()));
+
+  return (
+    <section id="skills" className="py-24 md:py-32 bg-cream dark:bg-stone-950 transition-colors duration-300 relative overflow-hidden">
+      
+      {/* Background Ambience */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-r from-coral/10 via-lavender/10 to-sky-400/10 dark:from-coral/5 dark:via-lavender/5 dark:to-sky-400/5 rounded-full blur-[140px] pointer-events-none opacity-60"></div>
+
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl mb-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-stone-200 dark:border-stone-800 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-stone-200/80 dark:border-stone-800">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-coral animate-ping"></span>
-              <span className="font-mono text-xs uppercase tracking-widest text-neutral-gray dark:text-stone-400">
-                Capabilities & Practice
-              </span>
+              <h2 className="text-xs font-highlight font-bold tracking-widest uppercase text-coral dark:text-coral">
+                Capabilities & Stack
+              </h2>
             </div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-charcoal dark:text-white tracking-tight">
-              My <span className="font-heading italic text-coral">Toolkit.</span>
-            </h2>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-charcoal dark:text-white tracking-tight">
+              Tools & <span className="italic text-coral font-heading">Technologies.</span>
+            </h3>
           </div>
-          <p className="text-sm md:text-base text-neutral-gray dark:text-stone-400 max-w-md leading-relaxed">
-            A balanced foundation of user-centered design, modern digital production tools, generative AI workflows, and strategic problem-solving.
-          </p>
-        </div>
-
-        {/* 4-COLUMN EDITORIAL DIRECTORY LAYOUT */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {SKILL_CATEGORIES.map((category, catIdx) => {
-            const meta = categoryMeta[catIdx] || {
-              num: `0${catIdx + 1}`,
-              title: category.title,
-              subtitle: 'Core competencies',
-              icon: <Layout size={20} />,
-              accentColor: 'text-coral',
-              borderColor: 'border-coral',
-              bgHover: 'group-hover:bg-coral/5',
-              dotColor: 'bg-coral'
-            };
-
-            const isHovered = hoveredCategory === catIdx;
-
-            return (
-              <div
-                key={catIdx}
-                onMouseEnter={() => setHoveredCategory(catIdx)}
-                onMouseLeave={() => setHoveredCategory(null)}
-                className={`flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-stone-50/80 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800 transition-all duration-300 group hover:shadow-xl hover:-translate-y-1.5 ${
-                  isHovered ? 'border-charcoal dark:border-stone-500' : ''
-                }`}
-              >
-                <div>
-                  {/* Category Top Banner */}
-                  <div className="flex items-center justify-between pb-4 mb-5 border-b border-stone-200/60 dark:border-stone-800/80">
-                    <span className="font-mono text-xs font-bold tracking-widest text-stone-400 dark:text-stone-500">
-                      {meta.num}
-                    </span>
-                    <div className={`${meta.accentColor} transition-transform duration-300 group-hover:scale-110`}>
-                      {meta.icon}
-                    </div>
-                  </div>
-
-                  {/* Category Title & Subtitle */}
-                  <div className="mb-6">
-                    <h3 className="text-xl font-heading font-bold text-charcoal dark:text-white tracking-tight group-hover:text-coral dark:group-hover:text-coral transition-colors">
-                      {category.title}
-                    </h3>
-                    <p className="text-xs text-neutral-gray dark:text-stone-400 mt-1">
-                      {meta.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Clean List of Skills */}
-                  <ul className="space-y-2.5">
-                    {category.skills.map((skill, sIdx) => (
-                      <li 
-                        key={sIdx}
-                        className="flex items-center gap-2.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300 hover:text-charcoal dark:hover:text-white transition-all duration-150 group/item cursor-default"
-                      >
-                        <span className={`w-1.5 h-1.5 rounded-full ${meta.dotColor} shrink-0 opacity-40 group-hover/item:opacity-100 group-hover/item:scale-125 transition-all duration-200`}></span>
-                        <span className="font-medium group-hover/item:translate-x-1 transition-transform duration-200 leading-snug">
-                          {skill.name}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Footer Count Pill */}
-                <div className="pt-6 mt-8 border-t border-stone-200/50 dark:border-stone-800/80 flex items-center justify-between">
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
-                    {category.skills.length} competencies
-                  </span>
-                  <div className="w-6 h-6 rounded-full bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 flex items-center justify-center text-stone-400 group-hover:text-charcoal dark:group-hover:text-white group-hover:border-coral transition-colors">
-                    <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </div>
-                </div>
-
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Dynamic Highlight Banner */}
-        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-cream dark:bg-stone-950 border border-stone-200 dark:border-stone-800 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          <div className="space-y-1">
-            <h4 className="text-base font-bold text-charcoal dark:text-white">
-              Bridging Research, Craft & AI Technology
-            </h4>
-            <p className="text-xs sm:text-sm text-neutral-gray dark:text-stone-400">
-              Applying human-centered design principles paired with modern creative intelligence to solve complex communication challenges.
+          
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <p className="text-xs sm:text-sm text-neutral-gray dark:text-stone-400 max-w-sm">
+              Hover over any track to pause the stream and inspect specific capabilities.
             </p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-2">
-            <span className="px-3.5 py-1.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-charcoal dark:text-stone-300 rounded-full text-xs font-medium">
-              SaaS & Product UI
-            </span>
-            <span className="px-3.5 py-1.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-charcoal dark:text-stone-300 rounded-full text-xs font-medium">
-              Indic Lettering
-            </span>
-            <span className="px-3.5 py-1.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-charcoal dark:text-stone-300 rounded-full text-xs font-medium">
-              Generative AI
-            </span>
+            {/* Quick Filter Pill Tabs */}
+            <div className="flex flex-wrap gap-1.5">
+              {['All', 'Software', 'AI', 'UI/UX', 'Strategy'].map((filter) => {
+                const isActive = activeFilter === filter;
+                return (
+                  <button
+                    key={filter}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
+                      isActive 
+                        ? 'bg-charcoal text-white dark:bg-white dark:text-stone-900 shadow-sm' 
+                        : 'bg-white/80 dark:bg-stone-900 text-stone-600 dark:text-stone-400 hover:text-charcoal dark:hover:text-white border border-stone-200 dark:border-stone-800'
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
       </div>
+
+      {/* MARQUEE TRACKS CONTAINER (Full width, sleek & low height) */}
+      <div className="space-y-7 md:space-y-9 relative">
+        
+        {/* Left & Right Gradient Horizon Fade Masks */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-32 md:w-48 bg-gradient-to-r from-cream dark:from-stone-950 to-transparent z-20"></div>
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-32 md:w-48 bg-gradient-to-l from-cream dark:from-stone-950 to-transparent z-20"></div>
+
+        {filteredCategories.map((catRow) => {
+          const infiniteItems = getInfiniteLoopItems(catRow.skills);
+
+          return (
+            <div key={catRow.id} className="relative marquee-pause group">
+              
+              {/* Category Label Strip */}
+              <div className="container mx-auto px-6 mb-2.5 max-w-7xl flex items-center gap-2">
+                <span className={`w-1.5 h-1.5 rounded-full ${catRow.dotColor}`}></span>
+                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
+                  {catRow.badge}
+                </span>
+                <span className="text-[11px] text-stone-400 dark:text-stone-600">• {catRow.skills.length} skills</span>
+              </div>
+
+              {/* Infinite Scrolling Track */}
+              <div className="overflow-hidden flex py-1">
+                <div 
+                  className={`${catRow.direction} gap-3 sm:gap-4`}
+                  style={catRow.speedStyle}
+                >
+                  {infiniteItems.map((skill, idx) => {
+                    const icon = getSkillIcon(skill.name);
+
+                    return (
+                      <div
+                        key={`${catRow.id}-${skill.name}-${idx}`}
+                        className="inline-flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800/90 shadow-sm hover:shadow-lg hover:border-coral/50 dark:hover:border-coral/50 hover:-translate-y-0.5 transition-all duration-200 cursor-default shrink-0 group/card"
+                      >
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 flex items-center justify-center shrink-0 group-hover/card:bg-coral group-hover/card:text-white transition-colors duration-200">
+                          {icon}
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-charcoal dark:text-stone-200 group-hover/card:text-coral dark:group-hover/card:text-coral transition-colors duration-200 whitespace-nowrap">
+                          {skill.name}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+            </div>
+          );
+        })}
+
+      </div>
+
+      {/* Sleek Bottom Info Bar */}
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl mt-12 md:mt-16 text-center">
+        <p className="font-mono text-xs text-stone-400 dark:text-stone-500 uppercase tracking-widest">
+          Continuous Integration of Analog Typography & Generative AI Systems
+        </p>
+      </div>
+
     </section>
   );
 };
