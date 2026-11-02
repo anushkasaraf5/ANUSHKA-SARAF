@@ -143,7 +143,7 @@
       /* Print Styles for Resume Download */
       @media print {
         @page {
-          size: A4;
+          size: A4 portrait;
           margin: 0;
         }
         
@@ -158,6 +158,7 @@
           margin: 0 !important;
           padding: 0 !important;
           overflow: hidden !important;
+          background: #ffffff !important;
         }
         
         /* Hide everything else */
@@ -170,7 +171,7 @@
           margin: 0 !important;
           padding: 0 !important;
           background: transparent !important;
-          height: 0 !important;
+          height: auto !important;
           min-height: 0 !important;
         }
         
@@ -182,7 +183,7 @@
           width: 210mm !important;
           height: 297mm !important;
           margin: 0 !important;
-          padding: 10mm 0 0 0 !important;
+          padding: 0 !important;
           box-sizing: border-box !important;
           page-break-after: avoid !important;
           page-break-before: avoid !important;
@@ -190,21 +191,23 @@
           overflow: hidden !important;
         }
 
-        /* Scale down the inner container to fit on one page */
         #resume > .container {
-          width: 100% !important;
-          max-width: 100% !important;
-          margin: 0 auto !important;
-          padding: 0 10mm !important;
-          zoom: 0.82 !important;
+          width: 210mm !important;
+          max-width: 210mm !important;
+          height: 297mm !important;
+          margin: 0 !important;
+          padding: 0 !important;
         }
-        
-        @-moz-document url-prefix() {
-          #resume > .container {
-            transform: scale(0.82) !important;
-            transform-origin: top center !important;
-            height: 100% !important;
-          }
+
+        .resume-sheet {
+          width: 210mm !important;
+          height: 297mm !important;
+          max-width: 210mm !important;
+          max-height: 297mm !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          border: none !important;
+          margin: 0 !important;
         }
       }
     </style>

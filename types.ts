@@ -84,4 +84,19 @@ export interface Certification {
 export interface AchievementItem {
   title: string;
   description: string;
+  year?: string;
+  email?: string;
+}
+
+export interface VolunteeringItem {
+  role: string;
+  period: string;
+}
+
+export interface ReferenceItem {
+  name: string;
+  designation: string;
+  organization: string;
+  phone: string;
+  email: string;
 }

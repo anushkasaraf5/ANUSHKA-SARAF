@@ -1,47 +1,87 @@
-import { Project, SkillCategory, ExperienceItem, EducationItem } from './types';
+import { Project, SkillCategory, ExperienceItem, EducationItem, VolunteeringItem, ReferenceItem, AchievementItem } from './types';
 
 export const PERSONAL_INFO = {
   name: "Anushka Saraf",
-  title: "Communication Design Student",
-  philosophy: "Design is not just about making things look good, but about communicating ideas with clarity, empathy, and purpose. I strive to bridge the gap between complex information and human experience.",
+  title: "Communication Designer",
+  phone: "+91 91632 03810",
   email: "anushka.saraf.505@gmail.com",
+  linkedin: "anushkasaraf",
+  linkedinUrl: "https://www.linkedin.com/in/anushkasaraf",
+  introQuote: "Curiosity is where my approach to design begins.",
+  introBio: "Somewhere between overthinking an idea and wondering why things are the way they are, I find the beginnings of something worth creating. I'm drawn to unexpected connections, overlooked details, and possibilities that aren't immediately obvious. Design gives me a way to bring those thoughts to life, while AI lets me push them further and explore where they might lead.",
+  introClosing: "I'm here to keep learning, keep creating, and keep asking, \"What if?\"",
+  philosophy: "Somewhere between overthinking an idea and wondering why things are the way they are, I find the beginnings of something worth creating. I'm drawn to unexpected connections, overlooked details, and possibilities that aren't immediately obvious. Design gives me a way to bring those thoughts to life, while AI lets me push them further and explore where they might lead.",
   socials: {
-    linkedin: "https://www.linkedin.com/in/anushka-saraf-9a9739308?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    linkedin: "https://www.linkedin.com/in/anushkasaraf",
     behance: "https://www.behance.net/anushkasaraf4"
   }
 };
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: "Skills",
-    iconName: "PenTool",
+    title: "Technical",
+    iconName: "Layout",
     skills: [
-      { name: "UI/UX" },
-      { name: "Typography" },
-      { name: "Branding" },
-      { name: "Web design" },
-      { name: "Editorial design" }
+      { name: "SaaS Interface Design" },
+      { name: "User Centric Design" },
+      { name: "User Interface (UI) Design" },
+      { name: "Visual Hierarchy & Layout Design" },
+      { name: "Typography & Colour Theory" },
+      { name: "Responsive Interface Design" },
+      { name: "Grid Systems & Spacing" },
+      { name: "Interaction Design" },
+      { name: "User Journey Mapping" },
+      { name: "Information Architecture" },
+      { name: "User Flows & Task Flows" },
+      { name: "Wireframing" },
+      { name: "Low and High-Fidelity Prototyping" },
+      { name: "Design Systems" },
+      { name: "Interactive Prototyping" },
+      { name: "Competitor Analysis" },
+      { name: "User Persona Development" },
+      { name: "Affinity Mapping" },
+      { name: "Dashboard Design" }
     ]
   },
   {
-    title: "Tools",
-    iconName: "Wrench",
-    skills: [
-      { name: "Figma" },
-      { name: "Adobe Illustrator" },
-      { name: "Adobe InDesign" },
-      { name: "Adobe Express" }
-    ]
-  },
-  {
-    title: "Interpersonal",
+    title: "Soft competencies",
     iconName: "HeartHandshake",
     skills: [
-      { name: "Communication" },
+      { name: "Critical Thinking" },
+      { name: "Analytical Thinking" },
+      { name: "Time Management" },
       { name: "Leadership" },
-      { name: "Adaptability" },
-      { name: "Time management" },
-      { name: "Teamwork" }
+      { name: "Team Coordination" }
+    ]
+  },
+  {
+    title: "Software",
+    iconName: "PenTool",
+    skills: [
+      { name: "Figma" },
+      { name: "Framer" },
+      { name: "Wordpress" },
+      { name: "HTML & CSS" },
+      { name: "Adobe Photoshop" },
+      { name: "Adobe Illustrator" }
+    ]
+  },
+  {
+    title: "AI & Generative Tools",
+    iconName: "Sparkles",
+    skills: [
+      { name: "ChatGPT" },
+      { name: "Gemini" },
+      { name: "Claude" },
+      { name: "Google AI Studio" },
+      { name: "Canva AI" },
+      { name: "Figma make" },
+      { name: "Stitch" },
+      { name: "Lovable" },
+      { name: "Leonardo AI" },
+      { name: "Adobe Firefly" },
+      { name: "Eleven Labs" },
+      { name: "Notebook LM" }
     ]
   }
 ];
@@ -160,48 +200,100 @@ export const PROJECTS: Project[] = [
 
 export const EDUCATION: EducationItem[] = [
   {
-    degree: "Bachelors of Design Honours in Communication Design",
-    institution: "UnitedWorld Institute of Design",
-    year: "2024 - Present"
+    degree: "Bachelor of Design (Hons.) Visual Communication",
+    institution: "Unitedworld Institute of Design, Gandhinagar, Gujarat",
+    year: "2024 – Present"
   },
   {
     degree: "Higher Secondary Education",
-    institution: "Lakshmipat Singhania Academy",
-    year: "2022 - 2024"
+    institution: "Lakshmipat Singhania Academy, Kolkata",
+    year: "2022 – 2024"
   },
   {
     degree: "Secondary Education",
-    institution: "Lakshmipat Singhania Academy",
-    year: "2011 - 2022"
+    institution: "Lakshmipat Singhania Academy, Kolkata",
+    year: "2011 – 2022"
   }
 ];
 
-export const EXPERIENCE: ExperienceItem[] = [
+export interface DetailedExperienceItem extends ExperienceItem {
+  bullets: string[];
+}
+
+export const WORK_EXPERIENCE: DetailedExperienceItem[] = [
   {
     role: "Graphic Design Intern",
-    company: "Lookad (India) Pvt. Ltd.",
-    period: "May 2026 - June 2026",
-    description: "Carried out tasks and responsibilities in graphic design and visual communication with sincerity, creativity, and diligence. Demonstrated good design sense, professionalism, attention to detail, and a positive attitude."
-  },
-  {
-    role: "Student Council Member",
-    company: "Student Council",
-    period: "2025 - 2026",
-    description: "Actively led student teams and coordinated various initiatives. Demonstrated strong leadership, teamwork, and organizational skills while representing student interests and managing council activities."
-  },
-  {
-    role: "Single Point of Contact (SPOC)",
-    company: "Ahemdabad Design Week 7.O",
-    period: "February 2026",
-    description: "Served as the single point of contact for the session, coordinating communication, schedules, and requirements to ensure smooth planning and execution. Supported end-to-end coordination to facilitate a seamless and well-managed experience."
-  },
-  {
-    role: "Communication Designer",
-    company: "Global Game Jam",
-    period: "January 2026",
-    description: "Designed a custom wayfinding solution for Global Game Jam 2026 (Ahmedabad Site) through a site navigation map. Collaborated with the operations team to align site logistics with clear navigation and efficient movement across the event."
+    company: "Lookad (India) Pvt. Ltd. Kolkata",
+    period: "May – June 2026",
+    description: "Designed digital assets and website layouts using visual hierarchy, typography, and layout principles to create clear, consistent user-facing experiences.",
+    bullets: [
+      "Designed digital assets and website layouts using visual hierarchy, typography, and layout principles to create clear, consistent user-facing experiences.",
+      "Generated and refined AI-assisted visuals for digital communications, integrating them into layouts to support visual storytelling and creative objectives.",
+      "Redesigned corporate website pages by refining content organisation, layout structure, and visual consistency across pages.",
+      "Collaborated with team members to interpret briefs, incorporate feedback, and deliver revised assets within deadlines.",
+      "Managed multiple design tasks and revisions while maintaining visual consistency, attention to detail, and adaptability."
+    ]
   }
 ];
+
+export const EXPERIENCE = WORK_EXPERIENCE;
+
+export const VOLUNTEERING: VolunteeringItem[] = [
+  {
+    role: "Student Council",
+    period: "2025–2026"
+  },
+  {
+    role: "Ahmedabad Design Week 7.0",
+    period: "Jan 2026"
+  },
+  {
+    role: "Global Game Jam",
+    period: "Jan 2026"
+  },
+  {
+    role: "Infotech Committee Member",
+    period: "2022 – 2023 & 2023 – 2024"
+  }
+];
+
+export const AWARDS_ACHIEVEMENTS: AchievementItem[] = [
+  {
+    title: "Prashasti Award",
+    year: "2023",
+    description: "Information and Technology field recognition.",
+    email: "anushka.saraf.505@gmail.com"
+  },
+  {
+    title: "CyberFair Platinum",
+    year: "2023",
+    description: "1st position in the International School CyberFair.",
+    email: "anushka.saraf.505@gmail.com"
+  }
+];
+
+export const ACHIEVEMENTS = AWARDS_ACHIEVEMENTS;
+
+export const REFERENCES: ReferenceItem[] = [
+  {
+    name: "Shankar Dayal",
+    designation: "Assistant Professor",
+    organization: "UID",
+    phone: "73970 62231",
+    email: "shankar@karnavatiuniversty.edu.in"
+  },
+  {
+    name: "Nikhil Lunia",
+    designation: "Chief Operating Officer (COO)",
+    organization: "Lookad (India) Pvt. Ltd.",
+    phone: "96815 65890",
+    email: "nikhil.lunia@digitale.co.in"
+  }
+];
+
+export const LANGUAGES: string[] = ["English", "Hindi", "Bengali"];
+
+export const INTERESTS: string[] = ["Baking", "Travelling"];
 
 export const CERTIFICATIONS: import('./types').Certification[] = [
   {
@@ -211,20 +303,5 @@ export const CERTIFICATIONS: import('./types').Certification[] = [
       "Creating Inclusive Content",
       "Ethical, Human-Centric AI Design"
     ]
-  }
-];
-
-export const ACHIEVEMENTS: import('./types').AchievementItem[] = [
-  {
-    title: "Prashasti Award",
-    description: "Information and Technology field recognition."
-  },
-  {
-    title: "CyberFair Platinum",
-    description: "1st position in the International School CyberFair."
-  },
-  {
-    title: "Infotech Committee Member",
-    description: "Served for two consecutive terms: 2022 - 2023 and 2023 - 2024."
   }
 ];
