@@ -261,14 +261,12 @@ export const AWARDS_ACHIEVEMENTS: AchievementItem[] = [
   {
     title: "Prashasti Award",
     year: "2023",
-    description: "Information and Technology field recognition.",
-    email: "anushka.saraf.505@gmail.com"
+    description: "Information and Technology field recognition."
   },
   {
     title: "CyberFair Platinum",
     year: "2023",
-    description: "1st position in the International School CyberFair.",
-    email: "anushka.saraf.505@gmail.com"
+    description: "1st position in the International School CyberFair."
   }
 ];
 
