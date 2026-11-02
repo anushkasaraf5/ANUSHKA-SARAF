@@ -91,15 +91,15 @@ const Resume: React.FC = () => {
                 </div>
 
                 {/* Skills */}
-                <div className="flex flex-col space-y-5">
+                <div className="flex flex-col space-y-3.5">
                   <h3 className="text-xl font-bold text-[#4ba3c7] tracking-tight">Skills</h3>
 
                   {SKILL_CATEGORIES.map((category, catIdx) => (
-                    <div key={catIdx} className="space-y-1.5">
-                      <h4 className="text-[12px] font-bold text-white tracking-wide">
+                    <div key={catIdx} className="space-y-1">
+                      <h4 className="text-[11.5px] font-bold text-white tracking-wide">
                         {category.title}
                       </h4>
-                      <ul className="text-[11px] text-stone-300 space-y-0.5 leading-snug">
+                      <ul className="text-[10px] text-stone-300 space-y-0.5 leading-tight">
                         {category.skills.map((skill, sIdx) => (
                           <li key={sIdx} className="flex items-start gap-1.5">
                             <span className="text-stone-400 select-none leading-tight">•</span>

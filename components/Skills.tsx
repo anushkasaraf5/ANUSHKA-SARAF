@@ -1,129 +1,186 @@
 import React, { useState } from 'react';
 import { SKILL_CATEGORIES } from '../constants';
 import { 
-  HeartHandshake, PenTool, Monitor, Palette, Globe, Layout, Image, 
-  Users, Brain, Clock, Zap, MessageCircle, Layers, Type as TypeIcon, Edit,
-  RefreshCw, Heart, Timer, Star, BookOpen
+  Sparkles, PenTool, Layout, HeartHandshake, ArrowUpRight
 } from 'lucide-react';
-import { SkillItem } from '../types';
 
 const Skills: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [hoveredCategory, setHoveredCategory] = useState<number | null>(null);
 
-  // Helper to map skill names to icons
-  const getSkillIcon = (name: string) => {
-    const lowerName = name.toLowerCase();
-    
-    // Soft Skills specific
-    if (lowerName.includes('communication')) return <MessageCircle size={24} />;
-    if (lowerName.includes('leadership')) return <Star size={24} />;
-    if (lowerName.includes('teamwork')) return <Users size={24} />;
-    if (lowerName.includes('adaptability')) return <RefreshCw size={24} />;
-    if (lowerName.includes('empathy')) return <Heart size={24} />;
-    if (lowerName.includes('time mgmt') || lowerName.includes('time management')) return <Timer size={24} />;
-
-    // Technical / Software
-    if (lowerName.includes('research')) return <Brain size={24} />;
-    if (lowerName.includes('ui') || lowerName.includes('ux')) return <Layout size={24} />;
-    if (lowerName.includes('brand')) return <Zap size={24} />;
-    if (lowerName.includes('typo')) return <TypeIcon size={24} />;
-    if (lowerName.includes('campaign')) return <MessageCircle size={24} />;
-    if (lowerName.includes('editorial')) return <Edit size={24} />;
-    if (lowerName.includes('illustrator')) return <PenTool size={24} />;
-    if (lowerName.includes('indesign')) return <BookOpen size={24} />;
-    if (lowerName.includes('adobe') || lowerName.includes('photo')) return <Image size={24} />;
-    if (lowerName.includes('express')) return <Globe size={24} />;
-    if (lowerName.includes('figma')) return <Layout size={24} />;
-    if (lowerName.includes('comm')) return <MessageCircle size={24} />;
-    
-    // Default icons
-    return <Monitor size={24} />;
-  };
-
-  const currentCategory = SKILL_CATEGORIES[activeTab];
+  // Category visual metadata for editorial styling
+  const categoryMeta = [
+    {
+      num: '01',
+      title: 'Technical & UX',
+      subtitle: 'Research, Architecture & UI',
+      icon: <Layout size={20} />,
+      accentColor: 'text-coral',
+      borderColor: 'border-coral',
+      bgHover: 'group-hover:bg-coral/5',
+      dotColor: 'bg-coral'
+    },
+    {
+      num: '02',
+      title: 'Soft Competencies',
+      subtitle: 'Leadership & Collaboration',
+      icon: <HeartHandshake size={20} />,
+      accentColor: 'text-amber-500',
+      borderColor: 'border-amber-500',
+      bgHover: 'group-hover:bg-amber-500/5',
+      dotColor: 'bg-amber-500'
+    },
+    {
+      num: '03',
+      title: 'Software Stack',
+      subtitle: 'Design & Prototyping Tools',
+      icon: <PenTool size={20} />,
+      accentColor: 'text-lavender',
+      borderColor: 'border-lavender',
+      bgHover: 'group-hover:bg-lavender/5',
+      dotColor: 'bg-lavender'
+    },
+    {
+      num: '04',
+      title: 'AI & Generative Tools',
+      subtitle: 'Assistive Creative Workflows',
+      icon: <Sparkles size={20} />,
+      accentColor: 'text-sky-400',
+      borderColor: 'border-sky-400',
+      bgHover: 'group-hover:bg-sky-400/5',
+      dotColor: 'bg-sky-400'
+    }
+  ];
 
   return (
-    <section id="skills" className="py-32 bg-cream dark:bg-stone-950 transition-colors duration-300 overflow-hidden relative">
+    <section id="skills" className="py-28 md:py-36 bg-white dark:bg-stone-900 transition-colors duration-300 relative overflow-hidden">
       
-      {/* Dynamic Background */}
-      <div className="absolute top-1/4 left-0 w-[800px] h-[800px] bg-coral/10 dark:bg-coral/5 rounded-full blur-[150px] pointer-events-none opacity-40 animate-pulse"></div>
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-lavender/20 dark:bg-lavender/10 rounded-full blur-[150px] pointer-events-none opacity-40 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      {/* Background Soft Gradients */}
+      <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-coral/5 dark:bg-coral/[0.03] rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-20 right-10 w-[450px] h-[450px] bg-lavender/10 dark:bg-lavender/[0.04] rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
         
         {/* Section Header */}
-        <div className="mb-20 md:mb-24 animate-fadeIn text-center">
-           <div className="flex items-center justify-center gap-4 mb-4">
-               <span className="text-sm font-highlight font-bold tracking-widest uppercase text-neutral-gray dark:text-stone-400">
-                 Capabilities
-               </span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-stone-200 dark:border-stone-800 gap-6">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-coral animate-ping"></span>
+              <span className="font-mono text-xs uppercase tracking-widest text-neutral-gray dark:text-stone-400">
+                Capabilities & Practice
+              </span>
             </div>
-           <h2 className="text-5xl md:text-7xl font-heading font-bold text-charcoal dark:text-white tracking-tighter mb-4">
-             My <span className="font-heading italic text-coral dark:text-coral">Toolkit.</span>
-           </h2>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-charcoal dark:text-white tracking-tight">
+              My <span className="font-heading italic text-coral">Toolkit.</span>
+            </h2>
+          </div>
+          <p className="text-sm md:text-base text-neutral-gray dark:text-stone-400 max-w-md leading-relaxed">
+            A balanced foundation of user-centered design, modern digital production tools, generative AI workflows, and strategic problem-solving.
+          </p>
         </div>
 
-        {/* Categories (Tabs) */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16 animate-fadeIn" style={{ animationDelay: '0.1s' }}>
-             {SKILL_CATEGORIES.map((category, index) => {
-                const isActive = activeTab === index;
-                return (
-                  <button
-                    key={index}
-                    onClick={() => setActiveTab(index)}
-                    className={`
-                       px-8 py-3 rounded-full font-highlight font-bold text-sm tracking-widest uppercase transition-all duration-300 border-2
-                       ${isActive 
-                          ? 'bg-charcoal dark:bg-white text-white dark:text-charcoal border-charcoal dark:border-white scale-105 shadow-lg' 
-                          : 'bg-transparent text-neutral-gray dark:text-stone-400 border-stone-200 dark:border-stone-700 hover:border-coral dark:hover:border-coral'
-                       }
-                    `}
-                  >
-                    {category.title}
-                  </button>
-                );
-             })}
+        {/* 4-COLUMN EDITORIAL DIRECTORY LAYOUT */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {SKILL_CATEGORIES.map((category, catIdx) => {
+            const meta = categoryMeta[catIdx] || {
+              num: `0${catIdx + 1}`,
+              title: category.title,
+              subtitle: 'Core competencies',
+              icon: <Layout size={20} />,
+              accentColor: 'text-coral',
+              borderColor: 'border-coral',
+              bgHover: 'group-hover:bg-coral/5',
+              dotColor: 'bg-coral'
+            };
+
+            const isHovered = hoveredCategory === catIdx;
+
+            return (
+              <div
+                key={catIdx}
+                onMouseEnter={() => setHoveredCategory(catIdx)}
+                onMouseLeave={() => setHoveredCategory(null)}
+                className={`flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-stone-50/80 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800 transition-all duration-300 group hover:shadow-xl hover:-translate-y-1.5 ${
+                  isHovered ? 'border-charcoal dark:border-stone-500' : ''
+                }`}
+              >
+                <div>
+                  {/* Category Top Banner */}
+                  <div className="flex items-center justify-between pb-4 mb-5 border-b border-stone-200/60 dark:border-stone-800/80">
+                    <span className="font-mono text-xs font-bold tracking-widest text-stone-400 dark:text-stone-500">
+                      {meta.num}
+                    </span>
+                    <div className={`${meta.accentColor} transition-transform duration-300 group-hover:scale-110`}>
+                      {meta.icon}
+                    </div>
+                  </div>
+
+                  {/* Category Title & Subtitle */}
+                  <div className="mb-6">
+                    <h3 className="text-xl font-heading font-bold text-charcoal dark:text-white tracking-tight group-hover:text-coral dark:group-hover:text-coral transition-colors">
+                      {category.title}
+                    </h3>
+                    <p className="text-xs text-neutral-gray dark:text-stone-400 mt-1">
+                      {meta.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Clean List of Skills */}
+                  <ul className="space-y-2.5">
+                    {category.skills.map((skill, sIdx) => (
+                      <li 
+                        key={sIdx}
+                        className="flex items-center gap-2.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300 hover:text-charcoal dark:hover:text-white transition-all duration-150 group/item cursor-default"
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full ${meta.dotColor} shrink-0 opacity-40 group-hover/item:opacity-100 group-hover/item:scale-125 transition-all duration-200`}></span>
+                        <span className="font-medium group-hover/item:translate-x-1 transition-transform duration-200 leading-snug">
+                          {skill.name}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Footer Count Pill */}
+                <div className="pt-6 mt-8 border-t border-stone-200/50 dark:border-stone-800/80 flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
+                    {category.skills.length} competencies
+                  </span>
+                  <div className="w-6 h-6 rounded-full bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 flex items-center justify-center text-stone-400 group-hover:text-charcoal dark:group-hover:text-white group-hover:border-coral transition-colors">
+                    <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
 
-        {/* Card Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center max-w-4xl mx-auto">
-            {currentCategory.skills.map((skill, index) => (
-                <SimpleSkillCard 
-                    key={`${activeTab}-${index}`}
-                    skill={skill}
-                    icon={getSkillIcon(skill.name)}
-                    index={index}
-                />
-            ))}
+        {/* Dynamic Highlight Banner */}
+        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-cream dark:bg-stone-950 border border-stone-200 dark:border-stone-800 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div className="space-y-1">
+            <h4 className="text-base font-bold text-charcoal dark:text-white">
+              Bridging Research, Craft & AI Technology
+            </h4>
+            <p className="text-xs sm:text-sm text-neutral-gray dark:text-stone-400">
+              Applying human-centered design principles paired with modern creative intelligence to solve complex communication challenges.
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2">
+            <span className="px-3.5 py-1.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-charcoal dark:text-stone-300 rounded-full text-xs font-medium">
+              SaaS & Product UI
+            </span>
+            <span className="px-3.5 py-1.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-charcoal dark:text-stone-300 rounded-full text-xs font-medium">
+              Indic Lettering
+            </span>
+            <span className="px-3.5 py-1.5 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-charcoal dark:text-stone-300 rounded-full text-xs font-medium">
+              Generative AI
+            </span>
+          </div>
         </div>
+
       </div>
     </section>
   );
 };
-
-interface SimpleSkillCardProps {
-  skill: SkillItem;
-  icon: React.ReactNode;
-  index: number;
-}
-
-const SimpleSkillCard: React.FC<SimpleSkillCardProps> = ({ skill, icon, index }) => {
-   return (
-      <div 
-        className="w-full flex flex-col items-center justify-center p-8 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-coral/50 dark:hover:border-coral/50 transition-all duration-300 animate-fadeIn group relative overflow-hidden cursor-default"
-        style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
-      >
-          {/* Subtle background glow on hover */}
-          <div className="absolute inset-0 bg-gradient-to-br from-coral/5 to-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
-          <div className="mb-4 text-lavender dark:text-lavender group-hover:scale-125 group-hover:-rotate-6 transition-transform duration-300 relative z-10">
-              {icon}
-          </div>
-          <h3 className="text-center font-subheading font-bold text-sm md:text-base text-charcoal dark:text-white group-hover:text-coral dark:group-hover:text-coral transition-colors duration-300 relative z-10">
-              {skill.name}
-          </h3>
-      </div>
-   );
-}
 
 export default Skills;
